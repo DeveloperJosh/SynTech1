@@ -312,16 +312,14 @@ class moderation(commands.Cog, description="This is the cog that allows you to g
     @commands.has_guild_permissions(manage_channels=True)
     async def config(self, ctx):
         h = db.logs_collection.find_one({"_id": ctx.guild.id})
-        prefixes = await get_prefix(self.bot, ctx.message)
-        yes = ', '.join([f"`{prefix}`" for prefix in prefixes])
 
         if h is None:
-            embed = discord.Embed(title=f"Config for {ctx.guild.name}", description=f"**Logs Channel**: No channel for logs set yet.\n**Prefix(s)**: {yes}", color=MAIN_COLOR)
+            embed = discord.Embed(title=f"Config for {ctx.guild.name}", description=f"**Logs Channel**: No channel for logs set yet.", color=MAIN_COLOR)
             await ctx.send(embed=embed)
 
         else:
             channel = self.bot.get_channel(h['channel'])
-            embed = discord.Embed(title=f"Config for {ctx.guild.name}", description=f"**Logs Channel**: `{channel.name}`\n**Prefix(s)**: {yes}", color=MAIN_COLOR)
+            embed = discord.Embed(title=f"Config for {ctx.guild.name}", description=f"**Logs Channel**: `{channel.name}`", color=MAIN_COLOR)
             await ctx.send(embed=embed)                
 
 def setup(bot):
