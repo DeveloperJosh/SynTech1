@@ -5,7 +5,6 @@ from discord.ext import commands
 import logging
 import datetime
 
-
 async def get_cog_help(cog, context):
     cog = context.bot.get_cog(cog)
     if cog.qualified_name == 'nsfw' and not context.channel.is_nsfw():

@@ -54,24 +54,6 @@ class moderation(commands.Cog, description="This is the cog that allows you to g
         else:
          db.logs_collection.delete_one(h)
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-
-        elif "!" in message.content:
-            return
-
-        elif message.channel.id == GLOBAL_CHAT_CHANNEL:
-            async with aiohttp.ClientSession() as session:
-                webhook = Webhook.from_url(GLOBAL_CHAT_WEBHOOK, session=session)
-                await webhook.send(message.content, username=message.author.name, avatar_url=message.author.avatar.url)
-
-        elif message.channel.id == GLOBAL_CHAT_CHANNEL_2:
-            async with aiohttp.ClientSession() as session:
-                webhook = Webhook.from_url(GLOBAL_CHAT_WEBHOOK_2, session=session)
-                await webhook.send(message.content, username=message.author.name, avatar_url=message.author.avatar.url)
-
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     @commands.guild_only()
