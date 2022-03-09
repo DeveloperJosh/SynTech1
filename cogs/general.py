@@ -145,12 +145,5 @@ class general(commands.Cog, description="This well be where all fun commands are
     async def count(self, ctx):
         await ctx.send("Hit the button to count", view=Counter(ctx))
 
-    @commands.command()
-    async def chat(self, ctx, *, text=None):
-        async with aiohttp.ClientSession() as session:
-            request = await session.get(f'http://api.brainshop.ai/get?bid={BID}&key={API}&uid={ctx.author.id}&msg={text}')
-            json = await request.json()
-            await ctx.reply(f"{json['cnt']}")
-
 def setup(bot):
     bot.add_cog(general(bot=bot))

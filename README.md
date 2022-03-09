@@ -1,7 +1,7 @@
 SynTech
 ====================
 
-Synterra-Technologies Team
+Synterra-Technologies Team (Old Team)
 ---------------------
 
 This bot was made in python
@@ -13,11 +13,6 @@ Make a .env file, Just like this
 DISCORD_BOT_SECRET=Token here
 DATABASE_NAME=Mongo Name here
 DATABASE_PASS=Mongo Password here
-WEBHOOK_1=Server1 webhook here
-WEBHOOK_2=Server2 webhook here
-CHAT_BID=
-CHAT_API_KEY=
 ```
-get your chat api and bid [here](https://brainshop.ai/)
 
 You can get a mongo link [here](https://www.mongodb.com/)
