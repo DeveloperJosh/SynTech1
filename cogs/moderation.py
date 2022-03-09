@@ -1,7 +1,6 @@
 import logging
 
 import asyncio
-from main import get_prefix
 
 import discord
 from discord.ext import commands
@@ -24,12 +23,6 @@ class moderation(commands.Cog, description="This is the cog that allows you to g
     @commands.Cog.listener()
     async def on_ready(self):
         logging.info('Moderation is ready')
-
-    @commands.Cog.listener()
-    async def on_command(self, ctx):
-        channel = self.bot.get_channel(LOG_CHANNEL)
-        embed = discord.Embed(title="Command Used!", description=f"**Command:**\n```{ctx.message.content}```\n**Guild:**\n```{ctx.guild.name} - {ctx.guild.id}```\n**Channel:**\n```{ctx.channel.name} - {ctx.channel.id}```\n**User:**\n```{ctx.author.name} - {ctx.author.id}```", timestamp=discord.utils.utcnow(), color=MAIN_COLOR).set_footer(text=self.bot.user.name, icon_url=self.bot.user.avatar.url)
-        await channel.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
@@ -78,67 +71,6 @@ class moderation(commands.Cog, description="This is the cog that allows you to g
             async with aiohttp.ClientSession() as session:
                 webhook = Webhook.from_url(GLOBAL_CHAT_WEBHOOK_2, session=session)
                 await webhook.send(message.content, username=message.author.name, avatar_url=message.author.avatar.url)
-
-    @commands.Cog.listener("on_message")
-    async def prefix_reply(self, message: discord.Message):
-        if message.author.bot:
-            return
-        bot_id = self.bot.user.id
-        if message.content.lower() in [f'<@{bot_id}>', f'<@!{bot_id}>']:
-            prefixes = await get_prefix(self.bot, message)
-            return await message.reply(
-                'My prefixes are: ' + ', '.join([f"`{prefix}`" for prefix in prefixes])
-            )
-
-    @commands.group(
-        aliases=['prefix', 'changeprefix', 'set-prefix', 'set_prefix', 'prefixes'],
-        help="Manage the prefixes of your guild!"
-    )
-    @commands.guild_only()
-    @commands.has_permissions(administrator=True)
-    async def setprefix(self, ctx: commands.Context):
-        if ctx.invoked_subcommand is None:
-            return await ctx.send_help(ctx.command)
-
-    @setprefix.command(help="Add a prefix!", name="add")
-    async def _add(self, ctx: commands.Context, *, prefix: str = None):
-        if not prefix:
-            return await ctx.reply(f"Please enter a prefix.\nCorrect Usage: `{ctx.clean_prefix}prefix add <prefix>`")
-        document = prefix_collection.find_one({"_id": ctx.guild.id})
-        if not document:
-            prefix_collection.insert_one({
-                "_id": ctx.guild.id,
-                "prefixes": [prefix, ctx.clean_prefix]
-            })
-            return await ctx.reply(f"The prefix `{prefix}` has been added.")
-        else:
-            if prefix in document['prefixes']:
-                return await ctx.reply(f"The prefix `{prefix}` is already added.")
-            if len(document['prefixes']) >= 10:
-                return await ctx.reply("You can only have 10 prefixes.")
-            else:
-                prefix_collection.update_one(
-                    {"_id": ctx.guild.id},
-                    {"$push": {"prefixes": prefix}}
-                )
-                return await ctx.reply(f"The prefix `{prefix}` has been added.")
-
-    @setprefix.command(help="Remove a prefix!", name="remove")
-    async def _remove(self, ctx: commands.Context, *, prefix: str = None):
-        if not prefix:
-            return await ctx.reply(f"Please enter a prefix.\nCorrect Usage: `{ctx.clean_prefix}prefix remove <prefix>`")
-        document = prefix_collection.find_one({"_id": ctx.guild.id})
-        if not document:
-            return await ctx.reply("There are no prefixes to remove.")
-        else:
-            if prefix in document['prefixes']:
-                prefix_collection.update_one(
-                    {"_id": ctx.guild.id},
-                    {"$pull": {"prefixes": prefix}}
-                )
-                return await ctx.reply(f"The prefix `{prefix}` has been removed.")
-            else:
-                return await ctx.reply(f"The prefix `{prefix}` is not added.")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)

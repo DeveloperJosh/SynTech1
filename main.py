@@ -8,22 +8,12 @@ from utils.database import db, prefix_collection
 
 from config import PREFIXES, DEVELOPERS
 
-
-async def get_prefix(bot: commands.AutoShardedBot, message: discord.Message) -> list[str]:
-    if not message.guild:
-        return PREFIXES
-
-    guild_id = message.guild.id
-    document = prefix_collection.find_one({"_id": guild_id})
-
-    if not document:
-        return PREFIXES
-    return document["prefixes"]
-
-intents = discord.Intents(messages=True, guilds=True, reactions=True, members=True, presences=True)
+intents = discord.Intents.default()
+intents.members = True
+intents.message_content = True
 bot = commands.AutoShardedBot(
     owner_ids=DEVELOPERS,
-    command_prefix=get_prefix,
+    command_prefix='!',
     intents=intents,
     case_insensitive=True,
     allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True, replied_user=True),

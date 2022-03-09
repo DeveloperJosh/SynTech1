@@ -9,10 +9,8 @@ import random
 import aiohttp
 from utils.button import Counter, Pages
 from utils.database import db
-from animec import Aninews
 import os
 
-news = Aninews()
 
 class general(commands.Cog, description="This well be where all fun commands are"):
     def __init__(self, bot):
@@ -146,12 +144,6 @@ class general(commands.Cog, description="This well be where all fun commands are
     @commands.command()
     async def count(self, ctx):
         await ctx.send("Hit the button to count", view=Counter(ctx))
-
-    @commands.command(name="anime-news")
-    async def anime_news(self, ctx):
-        embed = discord.Embed(title="Home Page", description="Go to the next page for anime", color=MAIN_COLOR)
-        embeds = [(discord.Embed(title=f"{news.titles[i]}", description=f"{news.description[i]}", color=MAIN_COLOR)) for i in range(0, len(news.titles))]
-        await ctx.send(embed=embed, view=Pages(ctx, embeds))
 
     @commands.command()
     async def chat(self, ctx, *, text=None):
