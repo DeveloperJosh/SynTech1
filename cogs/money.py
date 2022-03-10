@@ -336,7 +336,7 @@ class money(commands.Cog, description="Make money then sleep"):
         await ctx.send(embed=embed, view=Search(ctx))
 
     @commands.command()
-    async def give(self, ctx, member: discord.Member, money_stuff: Union[int]):
+    async def give(self, ctx, member: discord.Member, money_stuff: Union[int, str]):
         a = db.collection.find_one({"guild_id": ctx.guild.id, "_user": member.id})
 
         if a['bank'] is None:

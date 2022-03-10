@@ -169,6 +169,104 @@ class images(commands.Cog, description="This is where you can get images"):
             embed = discord.Embed(title="Panda!", color=MAIN_COLOR)
             embed.set_image(url=json['link'])
             await ctx.send(embed=embed)
+            
+    @commands.command(description='You can kiss your friend or lover')
+    async def kiss(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"Kiss! {self.bot.user.name} kissed {member.display_name}", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/kiss')
+       json = await request.json()
+       embed = discord.Embed(title=f"Awww! {ctx.author.name} kissed {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='You can slap your friend or lover')
+    async def slap(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"NO! lets not do that", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/slap')
+       json = await request.json()
+       embed = discord.Embed(title=f"HEYY! {ctx.author.name} slaped {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='You can poke your friend or lover')
+    async def poke(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"Poke! {self.bot.user.name} poked {member.display_name}", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/poke')
+       json = await request.json()
+       embed = discord.Embed(title=f"Poke! {ctx.author.name} poked {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='You can tickle your friend or lover')
+    async def tickle(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"Tickle! {self.bot.user.name} tickled {member.display_name}", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/tickle')
+       json = await request.json()
+       embed = discord.Embed(title=f"Tickle! {ctx.author.name} tickled {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='You can hug your friend or lover')
+    async def hug(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"Hug! {self.bot.user.name} huged {member.display_name}", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/hug')
+       json = await request.json()
+       embed = discord.Embed(title=f"Huggies! {ctx.author.name} huged {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='You can cuddle your friend or lover')
+    async def cuddle(self, ctx, member: discord.Member):
+
+      if member == ctx.author:
+       embed1 = discord.Embed(title="Oh no", description=f"Cuddle! {self.bot.user.name} cuddled {member.display_name}", color=MAIN_COLOR)
+       await ctx.send(embed=embed1)
+       return
+
+      async with aiohttp.ClientSession() as session:
+       request = await session.get('https://nekos.life/api/v2/img/cuddle')
+       json = await request.json()
+       embed = discord.Embed(title=f"Cuddles! {ctx.author.name} cuddled {member.display_name}", color=MAIN_COLOR)
+       embed.set_image(url=json['url'])
+       await ctx.send(embed=embed)
+
+    @commands.command(description='Cry when you need to')
+    async def cry(self, ctx):
+        async with aiohttp.ClientSession() as session:
+         request = await session.get('https://purrbot.site/api/img/sfw/cry/gif')
+         json = await request.json()
+         embed = discord.Embed(title="They need a hug", color=MAIN_COLOR)
+         embed.set_image(url=json['link'])
+         await ctx.send(embed=embed)
 
 
 def setup(bot):
